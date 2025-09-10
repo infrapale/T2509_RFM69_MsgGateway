@@ -109,8 +109,6 @@ Read Alarm Input Message:
 
 RH_RF69         rf69(RFM69_CS, RFM69_INT);
 RH_RF69         *rf69p;
-///module_data_st  me = {'X','1'};
-//time_type       MyTime = {2023, 11,01,1,01,55}; 
 
 // Function Prototypes
 void debug_print_task(void);
@@ -150,14 +148,22 @@ void initialize_tasks(void)
 
 void setup() 
 {
-    //while (!Serial); // wait until serial console is open, remove if not tethered to computer
-    delay(2000);
+    Serial.setTimeout(5000);
     Serial.begin(9600);
-    Serial.print(F(APP_NAME)); Serial.print(F(" Compiled: "));
-    Serial.print(F(__DATE__)); Serial.print(F(" "));
-    Serial.print(F(__TIME__)); Serial.println();
+    while (!Serial){delay(1);} ; // wait until serial console is open, remove if not tethered to computer
+    delay(2000);
+    Serial.print(APP_NAME); Serial.print(" Compiled: ");
+    Serial.flush();
+    Serial.print(__DATE__); Serial.print(" "); Serial.print(__TIME__); 
+    Serial.flush();
+    Serial.print("/ Module Tag: "); Serial.print(MY_MODULE_TAG); 
+    // Serial.print(F(" Addr: ")); Serial.print(MY_MODULE_ADDR); 
+    Serial.println();
+    Serial.flush();
 
+    #ifdef  ADA_M0_RFM69
     SerialX.begin(9600);
+    #endif
     
     uart_p = uart_get_data_ptr();
     send_p = rfm_send_get_data_ptr();
