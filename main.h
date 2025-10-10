@@ -16,7 +16,7 @@
 #endif
 
 #define APP_NAME    ("T2509_RFM69_MsgGateway")
-#define TEST_MODE
+//#define TEST_MODE
 #define TASK_NBR_OF  3
 
 #define MY_MODULE_TAG       ('A')
