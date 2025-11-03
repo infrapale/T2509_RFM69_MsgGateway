@@ -22,7 +22,7 @@ uart_st *uart_get_data_ptr(void)
 void uart_initialize(void)
 {
     uart.rx.msg.avail = false;
-    // atask_add_new(&uart_alarm_handle);
+    atask_add_new(&uart_alarm_handle);
     atask_add_new(&uart_func_handle);
 
 }
@@ -313,7 +313,7 @@ void uart_alarm_handling_task(void)
             uart.tx.msg.index = '1';
 
             uart_build_tx_msg(&uart.tx);
-            // Serial.print("build_tx_msg: "); Serial.println(uart.tx.msg.str);
+            Serial.print("build_tx_msg: "); Serial.println(uart.tx.msg.str);
             uart.rx.timeout = millis() + 10000;
             uart_alarm_handle.state = 20;
             break;
