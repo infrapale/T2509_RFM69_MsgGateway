@@ -22,7 +22,7 @@ uart_st *uart_get_data_ptr(void)
 void uart_initialize(void)
 {
     uart.rx.msg.avail = false;
-    atask_add_new(&uart_alarm_handle);
+    //atask_add_new(&uart_alarm_handle);
     atask_add_new(&uart_func_handle);
 
 }
@@ -173,6 +173,20 @@ void uart_rx_send_rfm_from_raw(void)
 }
 
 
+void uart_rx_send_rfm_from_node(void)
+{
+    uart.rx.msg.str = uart.rx.msg.str.substring(6,uart.rx.msg.len - 1);
+    uart_build_node_from_rx_str();
+    rfm_send_msg_st *send_p = rfm_send_get_data_ptr();
+    json_convert_uart_node_to_json(send_p->radio_msg, &uart);
+    rfm_send_radiate_msg(send_p->radio_msg);
+}
+
+
+
+
+
+
 void uart_print_msg_metadata(uart_msg_st *msg)
 {
     Serial.print("Length      "); Serial.println(msg->len);
@@ -290,6 +304,12 @@ void uart_handle_rx_data(void)
                 break;
             case UART_FUNC_READ_DECODED:
                 uart_decode_raw_data();
+                break;
+            case UART_FUNC_TRANSMIT_RAW:
+                uart_rx_send_rfm_from_raw();
+                break;
+            case UART_FUNC_TRANSMIT_NODE:
+                uart_rx_send_rfm_from_node();
                 break;
 
         } 

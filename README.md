@@ -21,6 +21,9 @@ UART Functions
 
 
 <A1T1=Hello World>
+<A1N1=RMH1;RKOK1;T;->
+
+<A1W1?0>
 <A1:<*RLH_1=T>>
 
 
