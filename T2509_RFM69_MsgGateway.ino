@@ -58,6 +58,7 @@ Relay Alarm Message:    <A1M1:OD1;PIR2;H;->
 
 
 
+
 *******************************************************************************
 Relay Mesage:      
       <#Rur=x>   u = relay unit, r= relay index, x=  0=off, 1=on, T=toggle
